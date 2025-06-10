@@ -1,9 +1,10 @@
-name: On Release
+name: On Tag
 
 on:
-  release:
-    types:
-      - released
+  push:
+    tags:
+      - v*
+
 
 jobs:
   build:
