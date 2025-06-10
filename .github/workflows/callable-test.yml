@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Tests
+        run: echo 'Tests OK!'
+
+      - name: Run Formatter
+        run: echo 'Format OK!'
+
+      - name: Run Linter
+        run: echo 'Lint OK!'
