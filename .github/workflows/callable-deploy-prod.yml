@@ -1,0 +1,26 @@
+name: Deploy Prod
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+
+jobs:
+  build:
+    name: Build Prod
+    uses: ./.github/workflows/callable-build.yml
+    with:
+      env: prod
+      tags: |
+        latest
+        ${{ inputs.version }}
+
+  deploy:
+    name: Deploy Prod
+    uses: ./.github/workflows/callable-deploy.yml
+    needs:
+      - build
+    with:
+      env: prod

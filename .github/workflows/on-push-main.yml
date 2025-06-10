@@ -17,6 +17,8 @@ jobs:
       - test
     with:
       env: dev
+      tags: |
+        latest
 
   deploy:
     name: Deploy Dev

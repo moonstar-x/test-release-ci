@@ -5,6 +5,10 @@ on:
     secrets:
       token:
         required: true
+    outputs:
+      version:
+        value: ${{ jobs.tag.outputs.version }}
+        description: Tag version.
 
 jobs:
   tag:

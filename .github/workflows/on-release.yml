@@ -1,0 +1,28 @@
+name: On Release
+
+on:
+  release:
+    types:
+      - created
+
+
+jobs:
+  prepare:
+    name: Prepare Prod Deploy
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+  build-deploy:
+    name: Build & Deploy Prod
+    uses: ./.github/workflows/callable-deploy-prod.yml
+    needs:
+      - prepare
+    with:
+      version: ${{ needs.prepare.outputs.version }}

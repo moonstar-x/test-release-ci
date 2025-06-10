@@ -29,3 +29,11 @@ jobs:
       - test-e2e
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-deploy:
+    name: Build & Deploy Prod
+    uses: ./.github/workflows/callable-deploy-prod.yml
+    needs:
+      - release
+    with:
+      version: ${{ needs.release.outputs.version }}
