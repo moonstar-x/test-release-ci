@@ -62,14 +62,13 @@ jobs:
           
           $CHANGELOG
           
-          **Full Changelog**: https://github.com/${{ github.repository }}/compare/$PREVIOUS_TAG...${{ steps.version.outputs.version }}
           EOF
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.tag.outputs.version }}
-          name: Release ${{ needs.tag.outputs.version }}
+          name: ${{ needs.tag.outputs.version }}
           body_path: release_notes.md
           draft: false
           prerelease: false
