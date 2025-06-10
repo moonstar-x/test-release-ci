@@ -9,3 +9,19 @@ jobs:
   test:
     name: Run Tests
     uses: ./.github/workflows/callable-test.yml
+
+  build:
+    name: Build Dev
+    uses: ./.github/workflows/callable-build.yml
+    needs:
+      - test
+    with:
+      env: dev
+
+  deploy:
+    name: Deploy Dev
+    uses: ./.github/workflows/callable-deploy.yml
+    needs:
+      - build
+    with:
+      env: dev

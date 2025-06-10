@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        type: string
+        required: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Build
+        run: echo 'Build ${{ inputs.env }} OK!'
+
+      - name: Publish Artifact
+        run: echo 'Publish ${{ inputs.env }} OK!'
