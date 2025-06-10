@@ -21,3 +21,11 @@ jobs:
     uses: ./.github/workflows/callable-test-e2e.yml
     needs:
       - test-integration
+
+  release:
+    name: Create Release
+    uses: ./.github/workflows/callable-create-release.yml
+    needs:
+      - test-e2e
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

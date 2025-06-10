@@ -1,0 +1,21 @@
+name: On Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+      name: Build Prod
+      uses: ./.github/workflows/callable-build.yml
+      with:
+        env: prod
+
+  deploy:
+    name: Deploy Prod
+    uses: ./.github/workflows/callable-deploy.yml
+    needs:
+      - build
+    with:
+      env: prod
