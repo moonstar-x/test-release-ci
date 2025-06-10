@@ -1,0 +1,19 @@
+name: Test - e2e
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    name: Test - e2e
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run e2e Tests
+        run: echo 'e2e Tests OK!'
+

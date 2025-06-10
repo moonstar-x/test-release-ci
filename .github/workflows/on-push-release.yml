@@ -1,0 +1,23 @@
+name: On Push (Release)
+
+on:
+  push:
+    branches:
+      - release/**
+
+jobs:
+  test:
+    name: Run Tests
+    uses: ./.github/workflows/callable-test.yml
+
+  test-integration:
+    name: Run Integration Tests
+    uses: ./.github/workflows/callable-test-integration.yml
+    needs:
+      - test
+
+  test-e2e:
+    name: Run e2e Tests
+    uses: ./.github/workflows/callable-test-e2e.yml
+    needs:
+      - test-integration

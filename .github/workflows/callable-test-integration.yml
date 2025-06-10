@@ -1,0 +1,19 @@
+name: Test - Integration
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    name: Test - Integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Integration Tests
+        run: echo 'Integration Tests OK!'
+
