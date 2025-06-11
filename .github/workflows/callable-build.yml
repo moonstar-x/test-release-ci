@@ -30,19 +30,15 @@ jobs:
       - name: Define Docker Images
         id: images
         run: |
-          images=""
-          while IFS= read -r tag; do
-            if [[ -n "$tag" ]]; then
-              if [[ -n "$images" ]]; then
-                images="$images"$'\n'
+          {
+            echo "names<<EOF"
+            while IFS= read -r tag; do
+              if [[ -n "$tag" ]]; then
+                echo "${{ env.REGISTRY }}/${{ inputs.env }}/${{ inputs.image_name }}:$tag"
               fi
-              images="$images${{ env.REGISTRY }}/${{ inputs.env }}/${{ inputs.image_name }}:$tag"
-            fi
-          done <<< "${{ inputs.tags }}"
-          
-          echo "names<<EOF" >> $GITHUB_OUTPUT
-          echo "$images" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+            done <<< "${{ inputs.tags }}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Echo Tags
         run: echo 'Using tags ${{ inputs.tags }}'
