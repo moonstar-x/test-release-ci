@@ -1,0 +1,18 @@
+name: Send Notification
+
+on:
+  workflow_call:
+    inputs:
+      message:
+        type: string
+        required: true
+
+jobs:
+  notify:
+    name: Send Notification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send notification.
+        run: echo 'Sending ${{ inputs.message }}'
+

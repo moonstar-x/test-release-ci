@@ -10,30 +10,10 @@ jobs:
     name: Run Tests
     uses: ./.github/workflows/callable-test.yml
 
-  test-integration:
-    name: Run Integration Tests
-    uses: ./.github/workflows/callable-test-integration.yml
+  notify:
+    name: Send Notification About Testing Ready
+    uses: ./.github/workflows/callable-notify.yml
     needs:
       - test
-
-  test-e2e:
-    name: Run e2e Tests
-    uses: ./.github/workflows/callable-test-e2e.yml
-    needs:
-      - test-integration
-
-  release:
-    name: Create Release
-    uses: ./.github/workflows/callable-create-release.yml
-    needs:
-      - test-e2e
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-
-  build-deploy:
-    name: Build & Deploy Prod
-    uses: ./.github/workflows/callable-deploy-prod.yml
-    needs:
-      - release
     with:
-      version: ${{ needs.release.outputs.version }}
+      message: Branch is ready for testing.
