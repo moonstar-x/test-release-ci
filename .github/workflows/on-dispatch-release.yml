@@ -10,33 +10,9 @@ on:
 
 
 jobs:
-  validate:
-    name: Validate Input
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ inputs.branch }}
-
-      - name: Validate Branch
-        run: |
-          echo "Validating branch: ${{ inputs.branch }}"
-          if [[ ! "${{ inputs.branch }}" =~ ^release/.* ]]; then
-            echo "❌ Branch must start with 'release/'"
-            exit 1
-          fi
-          echo "✅ Branch validation passed"
-
   release:
     name: Create Release
     uses: ./.github/workflows/callable-create-release.yml
-    needs:
-      - validate
-    with:
-      branch: ${{ inputs.branch }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 

@@ -3,9 +3,6 @@ name: Create Release
 on:
   workflow_call:
     inputs:
-      branch:
-        type: string
-        required: true
       prerelease:
         type: boolean
         default: false
@@ -30,12 +27,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ inputs.branch }}
 
       - name: Extract Version from Branch
         id: version
         run: |
-          BRANCH=${{ inputs.branch }}
+          BRANCH=${GITHUB_REF#refs/heads/}
           VERSION=${BRANCH#release/}
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
