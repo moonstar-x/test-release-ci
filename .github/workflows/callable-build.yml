@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REGISTRY: my-registry.com
+      REGISTRY: registry.docker.com
 
     steps:
       - name: Checkout Repository
