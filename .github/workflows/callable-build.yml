@@ -3,6 +3,9 @@ name: Build
 on:
   workflow_call:
     inputs:
+      image_name:
+        type: string
+        default: ${{ github.repository }}
       env:
         type: string
         required: true
@@ -15,11 +18,31 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
 
+    env:
+      REGISTRY: my-registry.com
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Define Docker Images
+        id: images
+        run: |
+          images=""
+          while IFS= read -r tag; do
+            if [[ -n "$tag" ]]; then
+              if [[ -n "$images" ]]; then
+                images="$images"$'\n'
+              fi
+              images="$images${{ env.REGISTRY }}/${{ inputs.env }}/${{ inputs.image_name }}:$tag"
+            fi
+          done <<< "${{ inputs.tags }}"
+          
+          echo "names<<EOF" >> $GITHUB_OUTPUT
+          echo "$images" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Echo Tags
         run: echo 'Using tags ${{ inputs.tags }}'
@@ -28,4 +51,4 @@ jobs:
         run: echo 'Build ${{ inputs.env }} OK!'
 
       - name: Publish Artifact
-        run: echo 'Publish ${{ inputs.env }} OK!'
+        run: echo 'Publish ${{ steps.images.outputs.names }} OK!'
