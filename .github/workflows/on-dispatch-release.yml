@@ -2,12 +2,6 @@ name: On Dispatch (Create & Deploy Release)
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        type: string
-        required: true
-        description: The name of the branch to release.
-
 
 jobs:
   release:
